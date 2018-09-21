@@ -4,6 +4,10 @@ import db from './db/index.js';
 
 const routes = Router();
 
+db.query('SELECT NOW()', (err, res) => {
+  console.log(res.rows[0])
+})
+
 // module.exports = router
 
 // router.get('/:id', async (req, res) => {

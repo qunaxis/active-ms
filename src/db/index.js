@@ -1,19 +1,17 @@
-const { Pool, Client } = require('pg')
+const { Pool } = require('pg')
 
-const { DATABASE_URL } = process.env
+let DATABASE_URL = ''
 
-// const pool = new Pool(PG_URI)
+if (process.env.NODE_ENV == 'production') {
+  DATABASE_URL = process.env.DATABASE_URL
+} else {
+  DATABASE_URL = 'postgres://postgres:Diman222319@localhost:5432/postgres'
+}
 
-const client = new Client({
+
+
+const pool = new Pool({
   connectionString: DATABASE_URL,
-})
-client.connect(err => {
-  err ? console.error(err) : 'Datebase connection has been successful'
-})
-
-client.query('SELECT NOW()', (err, res) => {
-  console.log(err, res)
-  client.end()
 })
 
 module.exports = {
