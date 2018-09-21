@@ -28,7 +28,7 @@ const VKontakteStrategy = VkPassport.Strategy;
 passport.use(new VKontakteStrategy({
     clientID:     VKONTAKTE_APP_ID, // VK.com docs call it 'API ID', 'app_id', 'api_id', 'client_id' or 'apiId'
     clientSecret: VKONTAKTE_APP_SECRET,
-    callbackURL:  "http://localhost/auth/vkontakte/callback"
+    callbackURL:  "//active-ms.herokuapp.com/auth/callback"
   },
   (accessToken, refreshToken, params, profile, done) => {
     console.log(params.email);
