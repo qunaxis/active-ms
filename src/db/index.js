@@ -1,11 +1,11 @@
 const { Pool, Client } = require('pg')
 
-const { PG_URI } = process.env
+const { DATABASE_URL } = process.env
 
 // const pool = new Pool(PG_URI)
 
 const client = new Client({
-  connectionString: PG_URI,
+  connectionString: DATABASE_URL,
 })
 client.connect(err => {
   err ? console.error(err) : 'Datebase connection has been successful'
