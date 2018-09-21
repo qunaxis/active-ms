@@ -11,6 +11,11 @@ client.connect(err => {
   err ? console.error(err) : 'Datebase connection has been successful'
 })
 
+client.query('SELECT NOW()', (err, res) => {
+  console.log(err, res)
+  client.end()
+})
+
 module.exports = {
   query: (text, params) => pool.query(text, params)
 }
