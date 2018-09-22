@@ -54,7 +54,7 @@ app.get('/auth/',
 app.get('/auth/callback',
   passport.authenticate('vkontakte', { failureRedirect: '/login' }),
   (req, res) => {
-    console.log(res);
+    // console.log(res);
     // Successful authentication, redirect home.
     res.redirect('/');
 });
