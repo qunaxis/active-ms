@@ -45,7 +45,7 @@ router.get('/utable', (req, res) => {
   res.redirect('/');
 })
 
-router.get('/users', (req, res) => {
+router.get('/users', async (req, res) => {
   try {
     const users = await db.query(`SELECT * FROM users;`)
   } catch (error) {
