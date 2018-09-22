@@ -8,13 +8,14 @@ const Group = new VK.Group(VKONTAKTE_GROUP_TOKEN)
 
 
 router.get('/msg', async (req, res) => {
-    Group.sendMessage({user_id: req.user.vk_id, message: req.params.msg}, (messageId, error) => {
+    Group.sendMessage({user_id: req.user.vk_id, message: req.param('text')}, (messageId, error) => {
         if (messageId) {
            console.log('Сообщение отправлено!\n message_id: ', messageId)
         } else {
            console.log('Не удалось отправить сообщение', error)
         }
-      })
+    })
+    res.redirect('/');
 })
 
 export default router;
