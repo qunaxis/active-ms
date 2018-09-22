@@ -2,7 +2,8 @@ import express from 'express';
 import path from 'path';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
-import routes from './routes';
+import session from 'express-session';
+import router from './router';
 import passport from 'passport';
 import VkPassport from 'passport-vkontakte';
 
@@ -17,12 +18,19 @@ app.disable('x-powered-by');
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
 
-app.use(logger('dev', {
-  skip: () => app.get('env') === 'test'
-}));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, '../public')));
+app.configure(() => {
+  app.use(logger('dev', {
+    skip: () => app.get('env') === 'test'
+  }));
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(express.session({ secret: 'keyboard cat' }));
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(express.static(path.join(__dirname, '../public')));
+})
+
+
 
 const VKontakteStrategy = VkPassport.Strategy;
 passport.use(new VKontakteStrategy({
@@ -44,7 +52,7 @@ passport.use(new VKontakteStrategy({
 
 
 // Routes
-app.use('/', routes);
+app.use('/', router);
 app.get('/auth/',
   passport.authenticate('vkontakte'),
   (req, res) => {
@@ -53,12 +61,10 @@ app.get('/auth/',
 });
 
 app.get('/auth/callback',
-  passport.authenticate('vkontakte', { failureRedirect: '/login' }),
-  (req, res) => {
-    // console.log(res);
-    // Successful authentication, redirect home.
-    res.redirect('/');
-});
+  passport.authenticate('vkontakte', {
+    successRedirect: '/',
+    failureRedirect: '/login' 
+ }));
 
 
 // Catch 404 and forward to error handler
