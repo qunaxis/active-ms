@@ -19,7 +19,8 @@ db.query('SELECT NOW()', (err, res) => {
  * GET home page
  */
 router.get('/', (req, res) => {
-  res.render('index', { title: 'Express Babel', 'user': req.session });
+  console.log(req.session);
+  res.render('index', { title: 'Express Babel', 'user': req.session.name.givenName });
 });
 
 /**
