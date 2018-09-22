@@ -19,9 +19,29 @@ db.query('SELECT NOW()', (err, res) => {
  * GET home page
  */
 router.get('/', (req, res) => {
-  console.log(req.session);
-  res.render('index', { title: 'Express Babel', 'user': req.session.name.givenName });
+  console.log(req.user);
+  res.render('index', { title: 'Express Babel', 'user': req.session.passport.id });
 });
+
+router.get('/utable', (req, res) => {
+  db.query(`DROP TABLE IF EXISTS "users" CASCADE;
+    CREATE TABLE "users" (
+      "id" SERIAL NOT NULL,
+      "surname" text NOT NULL,
+      "name" text NOT NULL,
+      "patronymic" text,
+      "bday" date,
+      "phonenumber" varchar(10) NOT NULL,
+      "vk_id" text,
+      "email" text,
+      "photo_100_url" text,
+      "photo_max_url" text,
+      "access_token" text,
+      PRIMARY KEY("id")
+    );`, (err, res) => {
+      err ? console.log(err) : console.log(`Table "users" has been created.`)
+    })
+})
 
 /**
  * GET /list

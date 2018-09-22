@@ -39,7 +39,7 @@ passport.deserializeUser((id, done) => {
 const router = Router();
 
 router.get('/',
-  passport.authenticate('vkontakte'),
+  passport.authenticate('vkontakte', { scope: ['offline', 'notify', 'email'] }),
   (req, res) => {
     // The request will be redirected to vk.com for authentication, so
     // this function will not be called.
