@@ -23,7 +23,7 @@ passport.use(new VKontakteStrategy({
         console.log('[ERROR]: ' + error)
     }
     console.log(rows)
-    if (rows[0].length == 0) {
+    if (rows[0].lenght == 0) {
         try {
             await db.query(`INSERT INTO 
                     users(surname, name, patronymic, bday, phonenumber, vk_id, email, photo_100_url, photo_max_url, access_token) 
@@ -73,7 +73,7 @@ passport.deserializeUser((id, done) => {
 const router = Router();
 
 router.get('/',
-  passport.authenticate('vkontakte', { scope: ['offline', 'notify', 'email'] }),
+  passport.authenticate('vkontakte', { scope: ['offline', 'email'] }),
   (req, res) => {
     // The request will be redirected to vk.com for authentication, so
     // this function will not be called.
