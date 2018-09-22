@@ -2,12 +2,15 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Добро пожаловать в АИС Профбюро ЭФ
+  br
   p User: #{user}
-  p
-    a(href='/auth') Войти через ВК
-  p
-    a(href='/logout') Выйти из АИС
+  - if (user == undefined)
+    p
+      a(href='/auth') Войти через ВК
+  - else
+    p
+      a(href='/logout') Выйти из АИС
   br
   p
     a(href=`/vk/msg?id=${id}&text=${text}`) Отправить тестовое сообщение
@@ -16,7 +19,7 @@ block content
     a(href='/users') Список пользователей в консоль
   p
     a(href='/utable') Пересоздать таблицу пользователей (!)
-    p Обязательно выйти из АИС, иначе – перезапуск приложения
+    p(class='small') Обязательно выйти из АИС, иначе – перезапуск приложения
 
 
   

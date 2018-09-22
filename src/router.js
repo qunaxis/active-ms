@@ -34,7 +34,7 @@ router.get('/', (req, res) => {
       text: ``
     }
   }
-  res.render('index', { title: 'AMS – Active Management System', user: user.label, id: user.id, text: user.text })
+  res.render('index', { title: 'AMS – Active Management System', user: user})
 })
 
 router.get('/utable', (req, res) => {
