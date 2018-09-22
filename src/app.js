@@ -50,16 +50,16 @@ passport.use(new VKontakteStrategy({
   }
 ));
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
+// passport.serializeUser((user, done) => {
+//   done(null, user.id);
+// });
 
-passport.deserializeUser((user, done) => {
-  // User.findById(id, function(err, user) {
-  //   done(err, user);
-  // });
-  done(null, user.id)
-});
+// passport.deserializeUser((user, done) => {
+//   // User.findById(id, function(err, user) {
+//   //   done(err, user);
+//   // });
+//   done(null, user.id)
+// });
 
 
 
@@ -75,7 +75,8 @@ app.get('/auth/',
 app.get('/auth/callback',
   passport.authenticate('vkontakte', {
     successRedirect: '/',
-    failureRedirect: '/login' 
+    failureRedirect: '/login',
+    session: false // SET TRUE AFTER CONNECT USER TABLE AND CONFIGURE SERIALIZE/DESERIALIZE FUNCTIONS
  }));
 
 
