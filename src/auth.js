@@ -58,10 +58,10 @@ passport.use(new VKontakteStrategy({
 
     
     // User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
-    //   return done(err, user);
+   //   return done(err, user);
     // });
 
-));
+}));
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
