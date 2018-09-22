@@ -19,7 +19,8 @@ db.query('SELECT NOW()', (err, res) => {
  * GET home page
  */
 router.get('/', (req, res) => {
-  res.render('index', { title: 'Express Babel', 'user': `${req.user.name + req.user.surname} (http://vk.com/id${req.user.vk_id})` });
+  let user = req.user == undefined ? `Yo! Please, auth into that shit.` : `${req.user.name + req.user.surname} (http://vk.com/id${req.user.vk_id})`
+  res.render('index', { title: 'Express Babel', 'user': user });
 });
 
 router.get('/utable', (req, res) => {
