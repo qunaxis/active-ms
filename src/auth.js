@@ -16,14 +16,14 @@ passport.use(new VKontakteStrategy({
     profileFields: ['bdate', 'photo_max', 'photo_100', 'sex']
   },
   async (accessToken, refreshToken, params, profile, done) => {
-    let rows = []
+    let result = []
     try {
-        rows = await db.query(`SELECT * FROM users WHERE vk_id = $1`, [profile.id])        
+        result = await db.query(`SELECT * FROM users WHERE vk_id = $1`, [profile.id])        
     } catch (error) {
         console.log('[ERROR]: ' + error)
     }
-    console.log(rows)
-    if (rowCount == 0) {
+    console.log(result)
+    if (result.rowCount == 0) {
         try {
             await db.query(`INSERT INTO 
                     users(surname, name, patronymic, bday, phonenumber, vk_id, email, photo_100_url, photo_max_url, access_token) 
