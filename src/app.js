@@ -18,17 +18,17 @@ app.disable('x-powered-by');
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
 
-app.configure(() => {
-  app.use(logger('dev', {
-    skip: () => app.get('env') === 'test'
-  }));
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(express.session({ secret: 'keyboard cat' }));
-  app.use(passport.initialize());
-  app.use(passport.session());
-  app.use(express.static(path.join(__dirname, '../public')));
-})
+
+app.use(logger('dev', {
+  skip: () => app.get('env') === 'test'
+}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.session({ secret: 'keyboard cat' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static(path.join(__dirname, '../public')));
+
 
 
 
