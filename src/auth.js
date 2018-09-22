@@ -47,13 +47,13 @@ passport.use(new VKontakteStrategy({
         }
         try {
             rows = await db.query(`SELECT * FROM users WHERE vk_id = $1`, [profile.id])
-            done(null, rows[0]);        
+            done(null, result.rows[0]);        
         } catch (error) {
             console.log('[ERROR]: ' + error)
             done(error, null)
         }
     } else {
-        done(null, rows[0])
+        done(null, result.rows[0])
     }
 
     
