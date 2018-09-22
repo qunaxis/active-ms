@@ -83,14 +83,19 @@ passport.deserializeUser(async (id, done) => {
 
 const router = Router();
 
-router.get('/',
+router.get('/auth',
   passport.authenticate('vkontakte', { scope: ['offline', 'email'] }),
   (req, res) => {
     // The request will be redirected to vk.com for authentication, so
     // this function will not be called.
 });
 
-router.get('/callback',
+router.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
+})
+
+router.get('/auth/callback',
   passport.authenticate('vkontakte', {
     successRedirect: '/',
     failureRedirect: '/login',
