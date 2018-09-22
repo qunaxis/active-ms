@@ -51,13 +51,11 @@ passport.use(new VKontakteStrategy({
             done(null, result.rows[0]);        
         } catch (error) {
             console.log('[ERROR]: ' + error)
-            done(error, null)
+            done(error, false)
         }
     } else {
         done(null, result.rows[0])
-    }
-
-    
+    }    
     // User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
    //   return done(err, user);
     // });
@@ -65,14 +63,21 @@ passport.use(new VKontakteStrategy({
 }));
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user);
 });
 
-passport.deserializeUser((id, done) => {
+passport.deserializeUser(async (id, done) => {
 //   User.findById(id, function(err, user) {
 //     done(err, user);
 //   });
-  done(null, id)
+  try {
+        result = await db.query(`SELECT * FROM users WHERE vk_id = $1`, [profile.id])
+        done(null, result.rows[0]);        
+    } catch (error) {
+        console.log('[ERROR]: ' + error)
+        done(error, false)
+    }
+//   done(null, id)
 });
 
 const router = Router();
@@ -88,7 +93,7 @@ router.get('/callback',
   passport.authenticate('vkontakte', {
     successRedirect: '/',
     failureRedirect: '/login',
-    session: true // SET TRUE AFTER CONNECT USER TABLE AND CONFIGURE SERIALIZE/DESERIALIZE FUNCTIONS
+    session: true
  }));
 
  export default router;

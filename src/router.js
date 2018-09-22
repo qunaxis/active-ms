@@ -19,7 +19,7 @@ db.query('SELECT NOW()', (err, res) => {
  * GET home page
  */
 router.get('/', (req, res) => {
-  console.log(req.user);
+  console.log(req.user.vk_id);
   res.render('index', { title: 'Express Babel', 'user': req.user });
 });
 
@@ -46,11 +46,13 @@ router.get('/utable', (req, res) => {
 })
 
 router.get('/users', (req, res) => {
-  db.query(`SELECT * FROM users;`,
-      (err, res) => {
-        err ? console.log(err) : console.log(res.rows[0])
-    })
-    res.redirect('/');
+  try {
+    const users = await db.query(`SELECT * FROM users;`)
+  } catch (error) {
+    console.log(error)
+  }
+  console.log(users)
+  res.redirect('/');
 })
 
 /**
