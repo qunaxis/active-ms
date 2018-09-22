@@ -61,10 +61,12 @@ app.get('/auth/',
 });
 
 app.get('/auth/callback',
-  passport.authenticate('vkontakte', {
-    successRedirect: '/',
-    failureRedirect: '/login' 
- }));
+  passport.authenticate('vkontakte', { failureRedirect: '/login' }, (req, res) => {
+    passport.serializeUser(function(user, done) {
+      done(null, user.id);
+    });
+    res.redirect('/');
+  }));
 
 
 // Catch 404 and forward to error handler
