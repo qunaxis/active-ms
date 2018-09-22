@@ -32,9 +32,9 @@ passport.use(new VKontakteStrategy({
                 `, [
                     profile.familyName,
                     profile.givenName,
-                    NULL,
+                    null,
                     profile.birthday,
-                    NULL,
+                    null,
                     profile.id,
                     profile.email,
                     profile.photos[1].value,
@@ -46,7 +46,7 @@ passport.use(new VKontakteStrategy({
             console.log('[ERROR]: ' + error)
         }
         try {
-            rows = await db.query(`SELECT * FROM users WHERE vk_id = $1`, [profile.id])
+            result = await db.query(`SELECT * FROM users WHERE vk_id = $1`, [profile.id])
             done(null, result.rows[0]);        
         } catch (error) {
             console.log('[ERROR]: ' + error)
