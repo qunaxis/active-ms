@@ -49,7 +49,7 @@ router.get('/callback',
   passport.authenticate('vkontakte', {
     successRedirect: '/',
     failureRedirect: '/login',
-    session: false // SET TRUE AFTER CONNECT USER TABLE AND CONFIGURE SERIALIZE/DESERIALIZE FUNCTIONS
+    session: true // SET TRUE AFTER CONNECT USER TABLE AND CONFIGURE SERIALIZE/DESERIALIZE FUNCTIONS
  }));
 
  export default router;
