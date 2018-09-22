@@ -28,5 +28,5 @@ const findUser = async (field, id) => {
 
 module.exports = {
   query: (text, params) => pool.query(text, params),
-  findUser: findUser
+  findUser
 }
