@@ -19,22 +19,22 @@ db.query('SELECT NOW()', (err, res) => {
  * GET home page
  */
 router.get('/', (req, res) => {
-  let user = {}
+  // let user = {}
 
-  if (req.user != undefined) {
-    user = {
-      label: `${req.user.name} ${req.user.surname} (id${req.user.vk_id})`,
-      id: req.user.vk_id,
-      text: `Тестовое сообщение для пользователя ${req.user.name} ${req.user.surname}`
-    }
-  } else {
-    user = {
-      label: `Yo! Please, auth into that shit.`,
-      id: 0,
-      text: ``
-    }
-  }
-  res.render('index', { title: 'AMS – Active Management System', user: user})
+  // if (req.user != undefined) {
+  //   user = {
+  //     label: `${req.user.name} ${req.user.surname} (id${req.user.vk_id})`,
+  //     id: req.user.vk_id,
+  //     text: `Тестовое сообщение для пользователя ${req.user.name} ${req.user.surname}`
+  //   }
+  // } else {
+  //   user = {
+  //     label: `Yo! Please, auth into that shit.`,
+  //     id: 0,
+  //     text: ``
+  //   }
+  // }
+  res.render('index', { title: 'AMS – Active Management System', user: req.user})
 })
 
 router.get('/utable', (req, res) => {
