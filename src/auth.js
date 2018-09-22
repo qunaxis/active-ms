@@ -15,34 +15,37 @@ passport.use(new VKontakteStrategy({
     callbackURL:  "//active-ms.herokuapp.com/auth/callback",
     profileFields: ['bdate', 'photo_max', 'photo_100', 'sex']
   },
-  (accessToken, refreshToken, params, profile, done) => {
-    // console.log(profile);
-    console.log(accessToken);
-    db.query(`SELECT * FROM users WHERE vk_id=$1`, [profile.id], (err, res) => {
-        if (res.rows[0].length == 0) {
-            db.query(`INSERT INTO 
-                    users(surname, name, patronymic, bday, phonenumber, vk_id, email, photo_100_url, photo_max_url, access_token) 
-                VALUES
-                    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-                `, [
-                    profile.familyName,
-                    profile.givenName,
-                    NULL,
-                    profile.birthday,
-                    NULL,
-                    profile.id,
-                    profile.email,
-                    profile.photos[1].value,
-                    profile.photos[2].value,
-                    accessToken
-                ],
-            (err, res) => {
-                err ? console.log(err) : console.log(`User inserted into the table.`)
-            })
-        } else {
-            console.log(res.rows[0]);
-        }
-    });
+  async (accessToken, refreshToken, params, profile, done) => {
+    try {
+        const rows = await db.query(`SELECT * FROM users WHERE vk_id = $1`, [profile.id])        
+    } catch (err) {
+        console.log('[ERROR]: ' + err)
+    }
+    console.log(rows)
+        // if (res.rows[0].length == 0) {
+        //     db.query(`INSERT INTO 
+        //             users(surname, name, patronymic, bday, phonenumber, vk_id, email, photo_100_url, photo_max_url, access_token) 
+        //         VALUES
+        //             ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+        //         `, [
+        //             profile.familyName,
+        //             profile.givenName,
+        //             NULL,
+        //             profile.birthday,
+        //             NULL,
+        //             profile.id,
+        //             profile.email,
+        //             profile.photos[1].value,
+        //             profile.photos[2].value,
+        //             accessToken
+        //         ],
+        //     (err, res) => {
+        //         err ? console.log(err) : console.log(`User inserted into the table.`)
+        //     })
+        // } else {
+        //     console.log(res.rows[0]);
+        // }
+    // });
 
     done(null, profile);
     // User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
