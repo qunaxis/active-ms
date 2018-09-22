@@ -50,6 +50,7 @@ router.get('/users', (req, res) => {
       (err, res) => {
         err ? console.log(err) : console.log(res.rows[0])
     })
+    res.redirect('/');
 })
 
 /**

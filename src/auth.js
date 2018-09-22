@@ -19,7 +19,7 @@ passport.use(new VKontakteStrategy({
     // console.log(profile);
     console.log(accessToken);
     db.query(`SELECT * FROM users WHERE vk_id=$1`, [profile.id], (err, res) => {
-        if (res.rows.length == 0) {
+        if (res.rows[0].length == 0) {
             db.query(`INSERT INTO 
                     users(surname, name, patronymic, bday, phonenumber, vk_id, email, photo_100_url, photo_max_url, access_token) 
                 VALUES
