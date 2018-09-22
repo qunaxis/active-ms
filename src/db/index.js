@@ -14,6 +14,19 @@ const pool = new Pool({
   connectionString: DATABASE_URL,
 })
 
+const findUser = async (field, id) => {
+  let result = []
+  try {
+      result = await db.query(`SELECT * FROM users WHERE $1 = $2`, [field, id])
+      console.log(`[DB.findhUser]: ${result.rowCount} rows.`)        
+      console.log(`[DB.findhUser]: ${result.row}`)        
+  } catch (error) {
+      console.log('[ERROR]: ' + error)
+  }
+  return result
+}
+
 module.exports = {
-  query: (text, params) => pool.query(text, params)
+  query: (text, params) => pool.query(text, params),
+  findUser: findUser
 }

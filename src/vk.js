@@ -18,17 +18,6 @@ router.get('/msg', async (req, res) => {
     res.redirect('/')
 })
 
-router.get('/msgUser', async (req, res) => {
-    let User = new VK.User(req.user.access_token)
-    User.sendMessage({user_id: req.param('id'), message: req.param('text')}, (messageId, error) => {
-        if (messageId) {
-           console.log('Сообщение отправлено!\n message_id: ', messageId)
-        } else {
-           console.log('Не удалось отправить сообщение', error)
-        }
-    })
-    User = {}
-    res.redirect('/')
-})
+
 
 export default router

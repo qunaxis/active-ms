@@ -1,11 +1,11 @@
-import { Router } from 'express';
-import passport from 'passport';
-import VkPassport from 'passport-vkontakte';
-import db from './db/index';
+import { Router } from 'express'
+import passport from 'passport'
+import VkPassport from 'passport-vkontakte'
+import db from './db/index'
 
 
 
-const VKontakteStrategy = VkPassport.Strategy;
+const VKontakteStrategy = VkPassport.Strategy
 const { VKONTAKTE_APP_ID, VKONTAKTE_APP_SECRET } = process.env
 
 passport.use(new VKontakteStrategy({
@@ -15,14 +15,9 @@ passport.use(new VKontakteStrategy({
     profileFields: ['bdate', 'photo_max', 'photo_100', 'sex']
   },
   async (accessToken, refreshToken, params, profile, done) => {
-    console.log(profile);
-    let result = []
-    try {
-        result = await db.query(`SELECT * FROM users WHERE vk_id = $1`, [profile.id])        
-    } catch (error) {
-        console.log('[ERROR]: ' + error)
-    }
-    console.log(result)
+    // console.log(profile)
+    const result = await db.findUser('vk_id', profile.id)
+    // console.log(result)
     if (result.rowCount == 0) {
         try {
             await db.query(`INSERT INTO 
@@ -47,7 +42,7 @@ passport.use(new VKontakteStrategy({
         }
         try {
             result = await db.query(`SELECT * FROM users WHERE vk_id = $1`, [profile.id])
-            done(null, result.rows[0]);        
+            done(null, result.rows[0])        
         } catch (error) {
             console.log('[ERROR]: ' + error)
             done(error, false)
@@ -55,37 +50,37 @@ passport.use(new VKontakteStrategy({
     } else {
         done(null, result.rows[0])
     }
-}));
+}))
 
 passport.serializeUser((user, done) => {
-    console.log(user);  
-    done(null, user.id);
-});
+    console.log(user)  
+    done(null, user.id)
+})
 
 passport.deserializeUser(async (id, done) => {
     try {
         const result = await db.query(`SELECT * FROM users WHERE id = $1`, [id])
-        done(null, result.rows[0]);        
+        done(null, result.rows[0])        
     } catch (error) {
         console.log('[ERROR]: ' + error)
         done(error, false)
     }
-});
+})
 
 
 
-const router = Router();
+const router = Router()
 
 router.get('/auth',
   passport.authenticate('vkontakte', { scope: ['offline', 'email'] }),
   (req, res) => {
     // The request will be redirected to vk.com for authentication, so
     // this function will not be called.
-});
+})
 
 router.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
+    req.logout()
+    res.redirect('/')
 })
 
 router.get('/auth/callback',
@@ -93,6 +88,6 @@ router.get('/auth/callback',
     successRedirect: '/',
     failureRedirect: '/login',
     session: true
- }));
+ }))
 
- export default router;
+ export default router
