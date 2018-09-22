@@ -23,7 +23,7 @@ passport.use(new VKontakteStrategy({
         console.log('[ERROR]: ' + error)
     }
     console.log(rows)
-    if (rows[0].lenght == 0) {
+    if (rows.length == 0) {
         try {
             await db.query(`INSERT INTO 
                     users(surname, name, patronymic, bday, phonenumber, vk_id, email, photo_100_url, photo_max_url, access_token) 
