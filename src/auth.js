@@ -16,7 +16,7 @@ passport.use(new VKontakteStrategy({
   },
   async (accessToken, refreshToken, params, profile, done) => {
     // console.log(profile)
-    const result = await db.findUser('vk_id', profile.id)
+    let result = await db.findUser('vk_id', profile.id)
     // console.log(result)
     if (result.rowCount == 0) {
         try {
