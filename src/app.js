@@ -33,6 +33,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 
 const VKontakteStrategy = VkPassport.Strategy;
+
 passport.use(new VKontakteStrategy({
     clientID:     VKONTAKTE_APP_ID, // VK.com docs call it 'API ID', 'app_id', 'api_id', 'client_id' or 'apiId'
     clientSecret: VKONTAKTE_APP_SECRET,
@@ -49,6 +50,16 @@ passport.use(new VKontakteStrategy({
   }
 ));
 
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
 
 
 // Routes
@@ -61,12 +72,10 @@ app.get('/auth/',
 });
 
 app.get('/auth/callback',
-  passport.authenticate('vkontakte', { failureRedirect: '/login' }), (req, res) => {
-    passport.serializeUser(function(user, done) {
-      done(null, user.id);
-    });
-    res.redirect('/');
-  });
+  passport.authenticate('vkontakte', {
+    successRedirect: '/',
+    failureRedirect: '/login' 
+ }));
 
 
 // Catch 404 and forward to error handler
