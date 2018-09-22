@@ -31,15 +31,15 @@ passport.use(new VKontakteStrategy({
                 VALUES
                     ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
                 `, [
-                    profile.familyName,
-                    profile.givenName,
+                    profile._json.last_name,
+                    profile._json.first_name,
                     null,
                     profile.birthday,
                     null,
                     profile.id,
                     profile.email,
-                    profile.photos[1].value,
-                    profile.photos[2].value,
+                    profile._json.photo_100,
+                    profile._json.photo_max,
                     accessToken
             ])
             console.log(`User ${givenName} ${familyName} has been registred.`)
