@@ -15,7 +15,7 @@ passport.use(new VKontakteStrategy({
     profileFields: ['bdate', 'photo_max', 'photo_100', 'sex']
   },
   (accessToken, refreshToken, params, profile, done) => {
-    console.log(profile);
+    // console.log(profile);
     console.log(accessToken);
 
     done(null, profile);
