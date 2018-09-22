@@ -11,7 +11,8 @@ const { VKONTAKTE_APP_ID, VKONTAKTE_APP_SECRET } = process.env
 passport.use(new VKontakteStrategy({
     clientID:     VKONTAKTE_APP_ID, // VK.com docs call it 'API ID', 'app_id', 'api_id', 'client_id' or 'apiId'
     clientSecret: VKONTAKTE_APP_SECRET,
-    callbackURL:  "//active-ms.herokuapp.com/auth/callback"
+    callbackURL:  "//active-ms.herokuapp.com/auth/callback",
+    profileFields: ['city', 'bdate']
   },
   (accessToken, refreshToken, params, profile, done) => {
     console.log(profile);
