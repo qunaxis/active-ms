@@ -23,7 +23,7 @@ passport.use(new VKontakteStrategy({
         console.log('[ERROR]: ' + error)
     }
     console.log(rows)
-    if (rows.length == 0) {
+    if (rowCount == 0) {
         try {
             await db.query(`INSERT INTO 
                     users(surname, name, patronymic, bday, phonenumber, vk_id, email, photo_100_url, photo_max_url, access_token) 
@@ -45,18 +45,22 @@ passport.use(new VKontakteStrategy({
         } catch (error) {
             console.log('[ERROR]: ' + error)
         }
+        try {
+            rows = await db.query(`SELECT * FROM users WHERE vk_id = $1`, [profile.id])
+            done(null, rows[0]);        
+        } catch (error) {
+            console.log('[ERROR]: ' + error)
+            done(error, null)
+        }
+    } else {
+        done(null, rows[0])
     }
-    try {
-        rows = await db.query(`SELECT * FROM users WHERE vk_id = $1`, [profile.id])
-        done(null, rows[0]);        
-    } catch (error) {
-        console.log('[ERROR]: ' + error)
-        done(error, null)
-    }
+
+    
     // User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
     //   return done(err, user);
     // });
-  }
+
 ));
 
 passport.serializeUser((user, done) => {
