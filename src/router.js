@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
     user = {
       label: `${req.user.name} ${req.user.surname} (id${req.user.vk_id})`,
       id: req.user.vk_id,
-      text: `Тестовое сообщения для пользователя ${req.user.name} ${req.user.surname}`
+      text: `Тестовое сообщение для пользователя ${req.user.name} ${req.user.surname}`
     }
   } else {
     user = {
