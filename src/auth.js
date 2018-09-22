@@ -24,16 +24,16 @@ passport.use(new VKontakteStrategy({
   }
 ));
 
-// passport.serializeUser((user, done) => {
-//   done(null, user.id);
-// });
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
 
-// passport.deserializeUser((user, done) => {
-//   // User.findById(id, function(err, user) {
-//   //   done(err, user);
-//   // });
-//   done(null, user.id)
-// });
+passport.deserializeUser((id, done) => {
+//   User.findById(id, function(err, user) {
+//     done(err, user);
+//   });
+  done(null, id)
+});
 
 const router = Router();
 
