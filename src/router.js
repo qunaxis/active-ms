@@ -2,7 +2,7 @@ import { Router } from 'express';
 import db from './db/index.js';
 
 
-const routes = Router();
+const router = Router();
 
 db.query('SELECT NOW()', (err, res) => {
   console.log(res.rows[0])
@@ -18,7 +18,7 @@ db.query('SELECT NOW()', (err, res) => {
 /**
  * GET home page
  */
-routes.get('/', (req, res) => {
+router.get('/', (req, res) => {
   res.render('index', { title: 'Express Babel' });
 });
 
@@ -31,7 +31,7 @@ routes.get('/', (req, res) => {
  * create different/better error handlers depending on
  * your use case.
  */
-routes.get('/list', (req, res, next) => {
+router.get('/list', (req, res, next) => {
   const { title } = req.query;
 
   if (title == null || title === '') {
@@ -46,4 +46,4 @@ routes.get('/list', (req, res, next) => {
   res.render('index', { title });
 });
 
-export default routes;
+export default router;
