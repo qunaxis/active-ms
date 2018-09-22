@@ -34,7 +34,7 @@ passport.use(new VKontakteStrategy({
     console.log(profile);
     console.log(accessToken);
 
-    return done(profile);
+    done(profile);
     // User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
     //   return done(err, user);
     // });
