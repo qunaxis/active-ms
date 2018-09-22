@@ -17,7 +17,7 @@ const pool = new Pool({
 const findUser = async (field, id) => {
   let result = []
   try {
-      result = await pool.query(`SELECT * FROM users WHERE $1 = $2`, [field, id])
+      result = await pool.query(`SELECT * FROM users WHERE ${field} = $2`, [id]) // Придумать замену, мб либа, составляющая SQL-запросы – так оставлять точно не дело
       console.log(`[DB.findhUser]: ${result.rowCount} rows was found by field '${field}'.`)        
       console.log(`[DB.findhUser]: ${result.rows}`)        
   } catch (error) {

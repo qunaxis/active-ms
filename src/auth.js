@@ -13,44 +13,43 @@ passport.use(new VKontakteStrategy({
     clientSecret: VKONTAKTE_APP_SECRET,
     callbackURL:  "//active-ms.herokuapp.com/auth/callback",
     profileFields: ['bdate', 'photo_max', 'photo_100', 'sex']
-  },
-  async (accessToken, refreshToken, params, profile, done) => {
-    // console.log(profile)
-    let result = await db.findUser('vk_id', profile.id)
-    // console.log(result)
-    if (result.rowCount == 0) {
-        try {
-            await db.query(`INSERT INTO 
-                    users(surname, name, patronymic, bday, phonenumber, vk_id, email, photo_100_url, photo_max_url, access_token) 
-                VALUES
-                    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-                `, [
-                    profile._json.last_name,
-                    profile._json.first_name,
-                    null,
-                    profile.birthday,
-                    '9046875727',
-                    profile.id,
-                    profile.email,
-                    profile._json.photo_100,
-                    profile._json.photo_max,
-                    accessToken
-            ])
-            console.log(`User ${profile._json.first_name} ${profile._json.last_name} has been registred.`)
-        } catch (error) {
-            console.log('[ERROR]: ' + error)
+    },
+    async (accessToken, refreshToken, params, profile, done) => {
+        let result = await db.findUser('vk_id', profile.id)
+        if (result.rowCount == 0) {
+            try {
+                await db.query(`INSERT INTO 
+                        users(surname, name, patronymic, bday, phonenumber, vk_id, email, photo_100_url, photo_max_url, access_token) 
+                    VALUES
+                        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+                    `, [
+                        profile._json.last_name,
+                        profile._json.first_name,
+                        null,
+                        profile.birthday,
+                        '9046875727',
+                        profile.id,
+                        profile.email,
+                        profile._json.photo_100,
+                        profile._json.photo_max,
+                        accessToken
+                ])
+                console.log(`User ${profile._json.first_name} ${profile._json.last_name} has been registred.`)
+            } catch (error) {
+                console.log('[ERROR]: ' + error)
+            }
+            try {
+                result = await db.findUser('vk_id', profile.id)
+                done(null, result.rows[0])        
+            } catch (error) {
+                console.log('[ERROR]: ' + error)
+                done(error, false)
+            }
+        } else {
+            done(null, result.rows[0])
         }
-        try {
-            result = await db.query(`SELECT * FROM users WHERE vk_id = $1`, [profile.id])
-            done(null, result.rows[0])        
-        } catch (error) {
-            console.log('[ERROR]: ' + error)
-            done(error, false)
-        }
-    } else {
-        done(null, result.rows[0])
     }
-}))
+))
 
 passport.serializeUser((user, done) => {
     console.log(user)  
@@ -59,7 +58,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
     try {
-        const result = await db.query(`SELECT * FROM users WHERE id = $1`, [id])
+        const result = await db.findUser('id', id)
         done(null, result.rows[0])        
     } catch (error) {
         console.log('[ERROR]: ' + error)
