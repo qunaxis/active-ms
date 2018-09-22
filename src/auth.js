@@ -36,7 +36,6 @@ passport.use(new VKontakteStrategy({
                     null,
                     profile.birthday,
                     null,
-                    null,
                     profile.id,
                     profile.email,
                     profile._json.photo_100,
