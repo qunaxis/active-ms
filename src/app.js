@@ -7,7 +7,7 @@ import passport from 'passport';
 
 
 import router from './router';
-import authRouter from 'auth';
+import authRouter from './auth';
 
 
 
