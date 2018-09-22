@@ -3,11 +3,10 @@ import passport from 'passport';
 import VkPassport from 'passport-vkontakte';
 import db from './db/index';
 
+
+
 const VKontakteStrategy = VkPassport.Strategy;
 const { VKONTAKTE_APP_ID, VKONTAKTE_APP_SECRET } = process.env
-
-
-
 
 passport.use(new VKontakteStrategy({
     clientID:     VKONTAKTE_APP_ID, // VK.com docs call it 'API ID', 'app_id', 'api_id', 'client_id' or 'apiId'
@@ -55,31 +54,25 @@ passport.use(new VKontakteStrategy({
         }
     } else {
         done(null, result.rows[0])
-    }    
-    // User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
-   //   return done(err, user);
-    // });
-
+    }
 }));
 
 passport.serializeUser((user, done) => {
-  console.log(user);  
-  done(null, user.id);
+    console.log(user);  
+    done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
-//   User.findById(id, function(err, user) {
-//     done(err, user);
-//   });
-  try {
+    try {
         const result = await db.query(`SELECT * FROM users WHERE id = $1`, [id])
         done(null, result.rows[0]);        
     } catch (error) {
         console.log('[ERROR]: ' + error)
         done(error, false)
     }
-//   done(null, id)
 });
+
+
 
 const router = Router();
 

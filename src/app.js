@@ -8,6 +8,7 @@ import passport from 'passport';
 
 import router from './router';
 import authRouter from './auth';
+import vkRouter from './vk';
 
 
 
@@ -29,10 +30,19 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, '../public')));
 
+// Check auth middleware
+function loggedIn(req, res, next) {
+  if (req.user) {
+      next();
+  } else {
+      res.redirect('/');
+  }
+}
 
 // Routes
 app.use('/', router);
-app.use('/', authRouter);
+app.use('/', authRouter); // /auth & /login'out
+app.use('/vk', loggedIn, vkRouter);
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
