@@ -1,8 +1,8 @@
-import { Router } from 'express';
-import db from './db/index.js';
+import { Router } from 'express'
+import db from './db/index.js'
 
 
-const router = Router();
+const router = Router()
 
 db.query('SELECT NOW()', (err, res) => {
   console.log(res.rows[0])
@@ -20,11 +20,11 @@ db.query('SELECT NOW()', (err, res) => {
  */
 router.get('/', (req, res) => {
   let user = req.user == undefined ? `Yo! Please, auth into that shit.` : `${req.user.name} ${req.user.surname} (http://vk.com/id${req.user.vk_id})`
-  res.render('index', { title: 'Express Babel', 'user': user });
-});
+  res.render('index', { title: 'Express Babel', 'user': user })
+})
 
 router.get('/utable', (req, res) => {
-  db.query(`DROP TABLE IF EXISTS "users" CASCADE;
+  db.query(`DROP TABLE IF EXISTS "users" CASCADE
     CREATE TABLE "users" (
       "id" SERIAL NOT NULL,
       "surname" text NOT NULL,
@@ -38,22 +38,22 @@ router.get('/utable', (req, res) => {
       "photo_max_url" text,
       "access_token" text,
       PRIMARY KEY("id")
-    );`, 
+    )`, 
     (err, res) => {
       err ? console.log(err) : console.log(`Table "users" has been created.`)
   })
-  res.redirect('/');
+  res.redirect('/')
 })
 
 router.get('/users', async (req, res) => {
   let users = []
   try {
-    users = await db.query(`SELECT * FROM users;`)
+    users = await db.query(`SELECT * FROM users`)
   } catch (error) {
     console.log(error)
   }
   console.log(users)
-  res.redirect('/');
+  res.redirect('/')
 })
 
 /**
@@ -66,18 +66,18 @@ router.get('/users', async (req, res) => {
  * your use case.
  */
 router.get('/list', (req, res, next) => {
-  const { title } = req.query;
+  const { title } = req.query
 
   if (title == null || title === '') {
     // You probably want to set the response HTTP status to 400 Bad Request
     // or 422 Unprocessable Entity instead of the default 500 of
     // the global error handler (e.g check out https://github.com/kbariotis/throw.js).
     // This is just for demo purposes.
-    next(new Error('The "title" parameter is required'));
-    return;
+    next(new Error('The "title" parameter is required'))
+    return
   }
 
-  res.render('index', { title });
-});
+  res.render('index', { title })
+})
 
-export default router;
+export default router
