@@ -19,8 +19,22 @@ db.query('SELECT NOW()', (err, res) => {
  * GET home page
  */
 router.get('/', (req, res) => {
-  let user = req.user == undefined ? `Yo! Please, auth into that shit.` : `${req.user.name} ${req.user.surname} (http://vk.com/id${req.user.vk_id})`
-  res.render('index', { title: 'Express Babel', 'user': user, id: req.user.vk_id, text: `Тестовое сообщения для пользователя ${req.user.name} ${req.user.surname}` })
+  let user = {}
+
+  if (req.user != undefined) {
+    user = {
+      label: `${req.user.name} ${req.user.surname} (id${req.user.vk_id})`,
+      id: req.user.vk_id,
+      text: `Тестовое сообщения для пользователя ${req.user.name} ${req.user.surname}`
+    }
+  } else {
+    user = {
+      label: `Yo! Please, auth into that shit.`,
+      id: 0,
+      text: ``
+    }
+  }
+  res.render('index', { title: 'AMS – Active Management System', 'user': user.label, id: user.id, text: user.text })
 })
 
 router.get('/utable', (req, res) => {
