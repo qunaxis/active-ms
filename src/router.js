@@ -46,8 +46,9 @@ router.get('/utable', (req, res) => {
 })
 
 router.get('/users', async (req, res) => {
+  let users = []
   try {
-    const users = await db.query(`SELECT * FROM users;`)
+    users = await db.query(`SELECT * FROM users;`)
   } catch (error) {
     console.log(error)
   }
