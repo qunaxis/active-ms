@@ -12,7 +12,7 @@ passport.use(new VKontakteStrategy({
     clientID:     VKONTAKTE_APP_ID, // VK.com docs call it 'API ID', 'app_id', 'api_id', 'client_id' or 'apiId'
     clientSecret: VKONTAKTE_APP_SECRET,
     callbackURL:  "//active-ms.herokuapp.com/auth/callback",
-    profileFields: ['city', 'bdate']
+    profileFields: ['bdate', 'photo_max', 'photo_100', 'sex']
   },
   (accessToken, refreshToken, params, profile, done) => {
     console.log(profile);
