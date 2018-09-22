@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import passport from 'passport';
 import VkPassport from 'passport-vkontakte';
 
 const VKontakteStrategy = VkPassport.Strategy;
