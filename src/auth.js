@@ -36,13 +36,14 @@ passport.use(new VKontakteStrategy({
                     null,
                     profile.birthday,
                     null,
+                    null,
                     profile.id,
                     profile.email,
                     profile._json.photo_100,
                     profile._json.photo_max,
                     accessToken
             ])
-            console.log(`User ${givenName} ${familyName} has been registred.`)
+            console.log(`User ${profile._json.first_name} ${profile._json.last_name} has been registred.`)
         } catch (error) {
             console.log('[ERROR]: ' + error)
         }
