@@ -19,7 +19,7 @@ db.query('SELECT NOW()', (err, res) => {
  * GET home page
  */
 router.get('/', (req, res) => {
-  res.render('index', { title: 'Express Babel' });
+  res.render('index', { title: req.user.id });
 });
 
 /**
