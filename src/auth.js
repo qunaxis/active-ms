@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import passport from 'passport';
 import VkPassport from 'passport-vkontakte';
+import db from './db/index';
 
 const VKontakteStrategy = VkPassport.Strategy;
 const { VKONTAKTE_APP_ID, VKONTAKTE_APP_SECRET } = process.env
@@ -17,6 +18,31 @@ passport.use(new VKontakteStrategy({
   (accessToken, refreshToken, params, profile, done) => {
     // console.log(profile);
     console.log(accessToken);
+    db.query(`SELECT * FROM users WHERE vk_id=$1`, [profile.id], (err, res) => {
+        if (res.rows.length == 0) {
+            db.query(`INSERT INTO 
+                    users(surname, name, patronymic, bday, phonenumber, vk_id, email, photo_100_url, photo_max_url, access_token) 
+                VALUES
+                    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+                `, [
+                    profile.familyName,
+                    profile.givenName,
+                    NULL,
+                    profile.birthday,
+                    NULL,
+                    profile.id,
+                    profile.email,
+                    profile.photos[1].value,
+                    profile.photos[2].value,
+                    accessToken
+                ],
+            (err, res) => {
+                err ? console.log(err) : console.log(`User inserted into the table.`)
+            })
+        } else {
+            console.log(res.rows[0]);
+        }
+    });
 
     done(null, profile);
     // User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {

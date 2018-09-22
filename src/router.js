@@ -20,7 +20,7 @@ db.query('SELECT NOW()', (err, res) => {
  */
 router.get('/', (req, res) => {
   console.log(req.user);
-  res.render('index', { title: 'Express Babel', 'user': req.session.passport.id });
+  res.render('index', { title: 'Express Babel', 'user': req.user });
 });
 
 router.get('/utable', (req, res) => {
@@ -38,8 +38,17 @@ router.get('/utable', (req, res) => {
       "photo_max_url" text,
       "access_token" text,
       PRIMARY KEY("id")
-    );`, (err, res) => {
+    );`, 
+    (err, res) => {
       err ? console.log(err) : console.log(`Table "users" has been created.`)
+  })
+  res.redirect('/');
+})
+
+router.get('/users', (req, res) => {
+  db.query(`SELECT * FROM users;`,
+      (err, res) => {
+        err ? console.log(err) : console.log(res.rows[0])
     })
 })
 
