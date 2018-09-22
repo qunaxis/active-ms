@@ -19,36 +19,40 @@ passport.use(new VKontakteStrategy({
     let rows = []
     try {
         rows = await db.query(`SELECT * FROM users WHERE vk_id = $1`, [profile.id])        
-    } catch (err) {
-        console.log('[ERROR]: ' + err)
+    } catch (error) {
+        console.log('[ERROR]: ' + error)
     }
     console.log(rows)
-        // if (res.rows[0].length == 0) {
-        //     db.query(`INSERT INTO 
-        //             users(surname, name, patronymic, bday, phonenumber, vk_id, email, photo_100_url, photo_max_url, access_token) 
-        //         VALUES
-        //             ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-        //         `, [
-        //             profile.familyName,
-        //             profile.givenName,
-        //             NULL,
-        //             profile.birthday,
-        //             NULL,
-        //             profile.id,
-        //             profile.email,
-        //             profile.photos[1].value,
-        //             profile.photos[2].value,
-        //             accessToken
-        //         ],
-        //     (err, res) => {
-        //         err ? console.log(err) : console.log(`User inserted into the table.`)
-        //     })
-        // } else {
-        //     console.log(res.rows[0]);
-        // }
-    // });
-
-    done(null, profile);
+    if (rows[0].length == 0) {
+        try {
+            await db.query(`INSERT INTO 
+                    users(surname, name, patronymic, bday, phonenumber, vk_id, email, photo_100_url, photo_max_url, access_token) 
+                VALUES
+                    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+                `, [
+                    profile.familyName,
+                    profile.givenName,
+                    NULL,
+                    profile.birthday,
+                    NULL,
+                    profile.id,
+                    profile.email,
+                    profile.photos[1].value,
+                    profile.photos[2].value,
+                    accessToken
+            ])
+            console.log(`User ${givenName} ${familyName} has been registred.`)
+        } catch (error) {
+            console.log('[ERROR]: ' + error)
+        }
+    }
+    try {
+        rows = await db.query(`SELECT * FROM users WHERE vk_id = $1`, [profile.id])
+        done(null, rows[0]);        
+    } catch (error) {
+        console.log('[ERROR]: ' + error)
+        done(error, null)
+    }
     // User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
     //   return done(err, user);
     // });
