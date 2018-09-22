@@ -16,8 +16,9 @@ passport.use(new VKontakteStrategy({
     profileFields: ['bdate', 'photo_max', 'photo_100', 'sex']
   },
   async (accessToken, refreshToken, params, profile, done) => {
+    let rows = []
     try {
-        const rows = await db.query(`SELECT * FROM users WHERE vk_id = $1`, [profile.id])        
+        rows = await db.query(`SELECT * FROM users WHERE vk_id = $1`, [profile.id])        
     } catch (err) {
         console.log('[ERROR]: ' + err)
     }
