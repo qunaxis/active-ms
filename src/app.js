@@ -30,10 +30,11 @@ passport.use(new VKontakteStrategy({
     clientSecret: VKONTAKTE_APP_SECRET,
     callbackURL:  "//active-ms.herokuapp.com/auth/callback"
   },
-  (accessToken, refreshToken, params, profile, done, err) => {
+  (accessToken, refreshToken, params, profile, done) => {
     console.log(profile);
     console.log(accessToken);
-    return done(err, profile);
+
+    return done(profile);
     // User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
     //   return done(err, user);
     // });
