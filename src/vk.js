@@ -8,7 +8,7 @@ const Group = new VK.Group(VKONTAKTE_GROUP_TOKEN)
 
 
 router.get('/msg', async (req, res) => {
-    Group.sendMessage({user_id: req.user.vk_id, message: req.param('text')}, (messageId, error) => {
+    Group.sendMessage({user_id: req.param('id'), message: req.param('text')}, (messageId, error) => {
         if (messageId) {
            console.log('Сообщение отправлено!\n message_id: ', messageId)
         } else {
