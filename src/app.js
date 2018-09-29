@@ -29,7 +29,7 @@ app.disable('x-powered-by')
 app.set('views', path.join(__dirname, '../views'))
 app.set('view engine', 'pug')
 
-
+app.set('log', log)
 app.use(logger('dev', {
   skip: () => app.get('env') === 'test'
 }))
@@ -43,7 +43,6 @@ app.use(express.static(path.join(__dirname, '../public')))
 // Check auth middleware
 function loggedIn(req, res, next) {
   if (req.user) {
-      log.info('TEST INFO')
       next()
   } else {
       res.redirect('/')
