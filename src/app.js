@@ -10,9 +10,16 @@ import router from './router'
 import authRouter from './auth'
 import vkRouter from './vk'
 
-const { createLogger, transports } = winston
+const { createLogger, format, transports } = winston
+const { printf } = format 
+
+const myFormat = printf(info => {
+  return `${info.level}: ${info.message}`;
+})
+
 const log = createLogger({
   // levels: winston.config.syslog.levels,
+  format: myFormat,
   transports: [
     new transports.Console(),
     new transports.File({
