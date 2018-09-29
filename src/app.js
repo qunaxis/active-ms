@@ -1,6 +1,6 @@
 import express from 'express'
 import path from 'path'
-import morgan from 'morgan'
+import logger from 'morgan'
 import bodyParser from 'body-parser'
 import session from 'express-session'
 import passport from 'passport'
@@ -10,27 +10,17 @@ import router from './router'
 import authRouter from './auth'
 import vkRouter from './vk'
 
-const { createLogger, transports } = winston
-const logger = createLogger({
-  levels: winston.config.syslog.levels,
-  transports: [
-    new transports.Console({ level: 'silly' }),
-    new transports.File({
-      filename: 'combined.log',
-      level: 'info'
-    })
-  ]
-})
+
 
 const app = express()
-app.use('log', logger)
 app.disable('x-powered-by')
 
 // View engine setup
 app.set('views', path.join(__dirname, '../views'))
 app.set('view engine', 'pug')
 
-app.use(morgan('dev', {
+
+app.use(logger('dev', {
   skip: () => app.get('env') === 'test'
 }))
 app.use(bodyParser.json())
