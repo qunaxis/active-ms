@@ -9,8 +9,8 @@ const Group = new VK.Group(VKONTAKTE_GROUP_TOKEN)
 
 router.get('/msg', async (req, res) => {
     try {
-        const res = await Group.sendMessage({user_id: req.param('id'), message: req.param('text')})
-        req.app.log.info(`Сообщение ${res.messageId} отправлено!`)
+        const res = await Group.sendMessage({user_id: req.body('id'), message: req.body('text')})
+        await req.app.log.info(`Сообщение ${res.messageId} отправлено!`)
     } catch (error) {
         req.app.log.error(`Не удалось отправить сообщение: ${error}`)
     }
