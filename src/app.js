@@ -14,10 +14,10 @@ const { createLogger, transports } = winston
 const log = createLogger({
   // levels: winston.config.syslog.levels,
   transports: [
-    new transports.Console({ level: 'silly' }),
+    new transports.Console(),
     new transports.File({
       filename: 'combined.log',
-      level: 'info'
+      level: 'error'
     })
   ]
 })
