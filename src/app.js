@@ -43,6 +43,7 @@ app.use(express.static(path.join(__dirname, '../public')))
 // Check auth middleware
 function loggedIn(req, res, next) {
   if (req.user) {
+      log.info('TEST INFO')
       next()
   } else {
       res.redirect('/')
