@@ -10,7 +10,17 @@ import router from './router'
 import authRouter from './auth'
 import vkRouter from './vk'
 
-
+const { createLogger, transports } = winston
+const log = createLogger({
+  levels: winston.config.syslog.levels,
+  transports: [
+    new transports.Console({ level: 'silly' }),
+    new transports.File({
+      filename: 'combined.log',
+      level: 'info'
+    })
+  ]
+})
 
 const app = express()
 app.disable('x-powered-by')
