@@ -29,7 +29,7 @@ app.disable('x-powered-by')
 app.set('views', path.join(__dirname, '../views'))
 app.set('view engine', 'pug')
 
-app.set('log', log)
+app.log = log
 app.use(logger('dev', {
   skip: () => app.get('env') === 'test'
 }))
