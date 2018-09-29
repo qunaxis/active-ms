@@ -12,7 +12,7 @@ import vkRouter from './vk'
 
 const { createLogger, transports } = winston
 const log = createLogger({
-  levels: winston.config.syslog.levels,
+  // levels: winston.config.syslog.levels,
   transports: [
     new transports.Console({ level: 'silly' }),
     new transports.File({
