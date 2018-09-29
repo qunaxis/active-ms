@@ -1,10 +1,10 @@
 import express from 'express'
 import path from 'path'
-import logger from 'morgan'
+import morgan from 'morgan'
 import bodyParser from 'body-parser'
 import session from 'express-session'
 import passport from 'passport'
-
+import log from 'winston'
 
 import router from './router'
 import authRouter from './auth'
@@ -13,14 +13,14 @@ import vkRouter from './vk'
 
 
 const app = express()
+app.use('log', log)
 app.disable('x-powered-by')
 
 // View engine setup
 app.set('views', path.join(__dirname, '../views'))
 app.set('view engine', 'pug')
 
-
-app.use(logger('dev', {
+app.use(morgan('dev', {
   skip: () => app.get('env') === 'test'
 }))
 app.use(bodyParser.json())
