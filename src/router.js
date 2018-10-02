@@ -67,7 +67,7 @@ router.get('/users', async (req, res) => {
 })
 
 router.get('/createSchema', (req, res) => {
-  info.log(db.createSchema())
+  req.app.log.info(db.createSchema())
   res.redirect('/')
 })
 
