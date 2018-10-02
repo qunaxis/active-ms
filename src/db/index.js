@@ -33,6 +33,7 @@ const createSchema = async () => {
   let result
   try {
     result = await pool.query(sql)
+    console.log(result.rows)
   } catch (error) {
     result = error
   }
