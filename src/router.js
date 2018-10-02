@@ -66,6 +66,11 @@ router.get('/users', async (req, res) => {
   res.redirect('/')
 })
 
+router.get('/createSchema', (req, res) => {
+  info.log(db.createSchema())
+  res.redirect('/')
+})
+
 /**
  * GET /list
  *

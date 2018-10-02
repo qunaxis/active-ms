@@ -14,7 +14,7 @@ const { createLogger, format, transports } = winston
 const { printf } = format 
 
 const myFormat = printf(info => {
-  return `${info.level}: ${info.message}`;
+  return `${info.level.toUpperCase()}: ${info.message}`;
 })
 
 const log = createLogger({
