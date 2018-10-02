@@ -29,7 +29,7 @@ const find = async (table, field, filter) => {
   return result
 }
 
-const createSchema = async() => {
+const createSchema = async () => {
   let result
   try {
     result = await pool.query(sql)
