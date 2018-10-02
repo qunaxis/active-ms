@@ -1,11 +1,4 @@
-﻿-- =============================================================================
--- Имя модели: DB
--- Создано: 03.10.2018 0:05:55
--- Версия модели: 
--- =============================================================================
-
-
-DROP TABLE IF EXISTS "users" CASCADE;
+﻿const sql = `DROP TABLE IF EXISTS "users" CASCADE;
 
 CREATE TABLE "users" (
 	"id" SERIAL NOT NULL,
@@ -252,5 +245,6 @@ ALTER TABLE "pgas_points" ADD CONSTRAINT "Ref_pgas_points_to_event_levels" FOREI
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
+`.toString()
 
-
+export default sql

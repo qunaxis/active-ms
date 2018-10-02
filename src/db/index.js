@@ -1,8 +1,9 @@
 import { Pool } from 'pg'
 import { readFileSync } from 'fs'
+import sql from './createSchema'
 
 let DATABASE_URL = ''
-const sql = readFileSync('./createSchema.sql').toString()
+
 
 if (process.env.NODE_ENV == 'production') {
   DATABASE_URL = process.env.DATABASE_URL
