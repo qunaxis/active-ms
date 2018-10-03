@@ -102,7 +102,7 @@ CREATE TABLE "event_levels" (
 
 DROP TABLE IF EXISTS "event_types" CASCADE;
 
-CREATE TABLE "event_types" (a
+CREATE TABLE "event_types" (
 	"id" SERIAL NOT NULL,
 	"title" text NOT NULL,
 	"description" text,
@@ -245,9 +245,6 @@ ALTER TABLE "pgas_points" ADD CONSTRAINT "pgas_points.level_id_event_levels.id" 
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
-
-
-
 `
 sql = sql.toString()
 

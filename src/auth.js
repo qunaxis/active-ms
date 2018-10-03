@@ -39,7 +39,7 @@ passport.use(new VKontakteStrategy({
                 console.log('[ERROR]: ' + error)
             }
             try {
-                result = await db.findUser('vk_id', profile.id)
+                result = await db.find('users', 'vk_id', profile.id)
                 done(null, result.rows[0])        
             } catch (error) {
                 console.log('[ERROR]: ' + error)
