@@ -18,7 +18,7 @@ db.query('SELECT NOW()', (err, res) => {
 /**
  * GET home page
  */
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
   let user = {}
 
   if (req.user != undefined) {
@@ -33,8 +33,9 @@ router.get('/', (req, res) => {
   res.render('index', { title: 'AMS – Active Management System', user: user})
 })
 
-router.get('/utable', (req, res) => {
-  db.query(`DROP TABLE IF EXISTS "users" CASCADE;
+router.get('/utable', async (req, res, next) => {
+  try {
+    db.query(`DROP TABLE IF EXISTS "users" CASCADE;
     CREATE TABLE "users" (
       "id" SERIAL NOT NULL,
       "surname" text NOT NULL,
@@ -48,25 +49,26 @@ router.get('/utable', (req, res) => {
       "photo_max_url" text,
       "access_token" text,
       PRIMARY KEY("id")
-    )`, 
-    (err, res) => {
-      err ? console.log(err) : console.log(`Table "users" has been created.`)
-  })
+    )`)
+    log.info(`Table "users" has been created.`)
+  } catch (error) {
+    next(error)
+  }
   res.redirect('/')
 })
 
-router.get('/users', async (req, res) => {
+router.get('/users', async (req, res, next) => {
   let users = []
   try {
     users = await db.query(`SELECT * FROM users`)
   } catch (error) {
-    console.log(error)
+    next(error)
   }
-  console.log(users)
+  req.app.log.info(users)
   res.redirect('/')
 })
 
-router.get('/createSchema', async (req, res) => {
+router.get('/createSchema', async (req, res, next) => {
   let result = await db.createSchema()
   req.app.log.info(result)
   res.redirect('/')
