@@ -15,7 +15,7 @@ passport.use(new VKontakteStrategy({
     profileFields: ['bdate', 'photo_max', 'photo_100', 'sex']
     },
     async (accessToken, refreshToken, params, profile, done) => {
-        let result = await db.findUser('vk_id', profile.id)
+        let result = await db.find('users', 'vk_id', profile.id)
         if (result.rowCount == 0) {
             try {
                 await db.query(`INSERT INTO 

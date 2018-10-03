@@ -30,6 +30,7 @@ const find = async (table, field, filter) => {
 }
 
 const createSchema = async () => {
+  console.log(sql)
   let result
   try {
     result = await pool.query(sql)
