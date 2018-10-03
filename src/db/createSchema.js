@@ -245,6 +245,7 @@ ALTER TABLE "pgas_points" ADD CONSTRAINT "Ref_pgas_points_to_event_levels" FOREI
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
-`.toString()
+`
+sql = sql.toString()
 
 export default sql
