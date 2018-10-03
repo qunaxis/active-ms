@@ -34,7 +34,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/utable', (req, res) => {
-  db.query(`DROP TABLE IF EXISTS "users" CASCADE
+  db.query(`DROP TABLE IF EXISTS "users" CASCADE;
     CREATE TABLE "users" (
       "id" SERIAL NOT NULL,
       "surname" text NOT NULL,

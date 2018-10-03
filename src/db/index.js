@@ -1,5 +1,4 @@
 import { Pool } from 'pg'
-import { readFileSync } from 'fs'
 import sql from './createSchema'
 
 let DATABASE_URL = ''
