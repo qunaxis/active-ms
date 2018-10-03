@@ -38,32 +38,32 @@ passport.use(new VKontakteStrategy({
                     VALUES
                         ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
                     `, [
-                        profile._json.last_name,
-                        profile._json.first_name,
-                        null,
-                        profile.birthday,
-                        '9046875727',
-                        profile.id,
-                        profile.email,
-                        profile._json.photo_100,
-                        profile._json.photo_max,
-                        accessToken,
-                        null,
-                        null,
-                        null,
-                        new Date(),
-                        new Date(),
-                        null
+                        profile._json.last_name, // surname
+                        profile._json.first_name, // name
+                        null, // patronymic
+                        profile.birthday, // birthday
+                        '9046875727', // phonenumber
+                        profile.id, // vk_id
+                        profile.email, // email
+                        profile._json.photo_100, // photo_url_100
+                        profile._json.photo_max, // photo_url_ max
+                        accessToken, // access_token
+                        null, // pass_id
+                        null, // pass_i_by
+                        null, // pass_i_at
+                        new Date(), // cr_at
+                        new Date(), // up_at
+                        null // up_by
                 ])
                 console.log(`User ${profile._json.first_name} ${profile._json.last_name} has been registred.`)
             } catch (error) {
-                console.log('[ERROR]: ' + error)
+                console.log('[ERROR]: ' + error.stack)
             }
             try {
                 result = await db.find('users', 'vk_id', profile.id)
                 done(null, result.rows[0])        
             } catch (error) {
-                console.log('[ERROR]: ' + error)
+                console.log('[ERROR]: ' + error.stack)
                 done(error, false)
             }
         } else {
