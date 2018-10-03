@@ -1,6 +1,6 @@
 ﻿-- =============================================================================
 -- Имя модели: DB
--- Создано: 03.10.2018 14:12:15
+-- Создано: 03.10.2018 20:09:12
 -- Версия модели: 
 -- =============================================================================
 
@@ -16,13 +16,15 @@ CREATE TABLE "users" (
 	"phonenumber" varchar(10) NOT NULL,
 	"vk_id" int4,
 	"email" text,
-	"photo_url" text,
+	"photo_url_100" text,
+	"photo_url_max" int4,
+	"access_token" int4,
 	"pass_id" varchar(10),
 	"pass_issued_by" text,
 	"pass_issued_at" date,
 	"created_at" timestamp NOT NULL,
 	"updated_at" timestamp NOT NULL,
-	"updated_by_uid" int4 NOT NULL,
+	"updated_by_uid" int4,
 	PRIMARY KEY("id")
 );
 

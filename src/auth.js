@@ -19,9 +19,22 @@ passport.use(new VKontakteStrategy({
         if (result.rowCount == 0) {
             try {
                 await db.query(`INSERT INTO 
-                        users(surname, name, patronymic, bday, phonenumber, vk_id, email, photo_100_url, photo_max_url, access_token) 
+                        users(surname, 
+                              name, 
+                              patronymic, 
+                              birthday, 
+                              phonenumber, 
+                              vk_id, email, 
+                              photo_url_100, 
+                              photo_url_max, 
+                              access_token, 
+                              pass_issued_by, 
+                              pass_issued_at, 
+                              created_at, 
+                              updated_at, 
+                              updated_by_uid) 
                     VALUES
-                        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+                        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
                     `, [
                         profile._json.last_name,
                         profile._json.first_name,
@@ -32,7 +45,13 @@ passport.use(new VKontakteStrategy({
                         profile.email,
                         profile._json.photo_100,
                         profile._json.photo_max,
-                        accessToken
+                        accessToken,
+                        null,
+                        null,
+                        null,
+                        new Date(),
+                        new Date(),
+                        null
                 ])
                 console.log(`User ${profile._json.first_name} ${profile._json.last_name} has been registred.`)
             } catch (error) {
