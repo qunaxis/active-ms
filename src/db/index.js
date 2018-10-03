@@ -21,7 +21,7 @@ const find = async (table, field, filter) => {
   try {
       result = await pool.query(`SELECT * FROM ${table} WHERE ${field} = $1`, [filter]) // Придумать замену, мб либа, составляющая SQL-запросы – так оставлять точно не дело
       console.log(`[DB.find]: ${result.rowCount} rows was found by field '${field}'.`)        
-      console.log(`[DB.find]: ${toString(result.rows)}`)        
+      // console.log(`[DB.find]: ${toString(result.rows)}`)        
   } catch (error) {
       console.log('[ERROR]: ' + error)
   }
@@ -29,7 +29,7 @@ const find = async (table, field, filter) => {
 }
 
 const createSchema = async () => {
-  console.log(sql)
+  // console.log(sql)
   let result
   try {
     result = await pool.query(sql)
