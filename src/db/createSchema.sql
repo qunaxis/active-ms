@@ -1,4 +1,10 @@
-﻿let sql = `
+﻿-- =============================================================================
+-- Имя модели: DB
+-- Создано: 03.10.2018 14:02:12
+-- Версия модели: 
+-- =============================================================================
+
+
 DROP TABLE IF EXISTS "users" CASCADE;
 
 CREATE TABLE "users" (
@@ -246,7 +252,5 @@ ALTER TABLE "pgas_points" ADD CONSTRAINT "Ref_pgas_points_to_event_levels" FOREI
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
-`
-sql = sql.toString()
 
-export default sql
+
