@@ -120,7 +120,7 @@ CREATE TABLE "pgas_points" (
 );
 
 
-ALTER TABLE "users" ADD CONSTRAINT "users <- users.update_by_uid" FOREIGN KEY ("updated_by_uid")
+ALTER TABLE "users" ADD CONSTRAINT "users_users.update_by_uid" FOREIGN KEY ("updated_by_uid")
 	REFERENCES "users"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
@@ -141,56 +141,56 @@ ALTER TABLE "role_elections" ADD CONSTRAINT "Провести выборы на 
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "role_elections" ADD CONSTRAINT "role_elections.confirmed_by_uid <- users.id" FOREIGN KEY ("confirmed_by_uid")
+ALTER TABLE "role_elections" ADD CONSTRAINT "role_elections.confirmed_by_uid_users.id" FOREIGN KEY ("confirmed_by_uid")
 	REFERENCES "users"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "role_elections" ADD CONSTRAINT "role_elections.created_by_uid <- users.id" FOREIGN KEY ("created_by_uid")
+ALTER TABLE "role_elections" ADD CONSTRAINT "role_elections.created_by_uid_users.id" FOREIGN KEY ("created_by_uid")
 	REFERENCES "users"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "role_elections" ADD CONSTRAINT "role_elections.updated_by_uid <- users.id" FOREIGN KEY ("updated_by_uid")
+ALTER TABLE "role_elections" ADD CONSTRAINT "role_elections.updated_by_uid_users.id" FOREIGN KEY ("updated_by_uid")
 	REFERENCES "users"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "events" ADD CONSTRAINT "events.level_id <- event_levels.id" FOREIGN KEY ("level_id")
+ALTER TABLE "events" ADD CONSTRAINT "events.level_id_event_levels.id" FOREIGN KEY ("level_id")
 	REFERENCES "event_levels"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "events" ADD CONSTRAINT "event.type_id <- event_types.id" FOREIGN KEY ("type_id")
+ALTER TABLE "events" ADD CONSTRAINT "event.type_id_event_types.id" FOREIGN KEY ("type_id")
 	REFERENCES "event_types"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "events" ADD CONSTRAINT "events.created_by_uid <- users.id" FOREIGN KEY ("created_by_uid")
+ALTER TABLE "events" ADD CONSTRAINT "events.created_by_uid_users.id" FOREIGN KEY ("created_by_uid")
 	REFERENCES "users"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "events" ADD CONSTRAINT "events.update_by_uid <- users.id" FOREIGN KEY ("updated_by_uid")
+ALTER TABLE "events" ADD CONSTRAINT "events.update_by_uid_users.id" FOREIGN KEY ("updated_by_uid")
 	REFERENCES "users"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "event_participants" ADD CONSTRAINT "event_participants.event_id <- events.id" FOREIGN KEY ("event_id")
+ALTER TABLE "event_participants" ADD CONSTRAINT "event_participants.event_id_events.id" FOREIGN KEY ("event_id")
 	REFERENCES "events"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
@@ -218,28 +218,28 @@ ALTER TABLE "event_participants" ADD CONSTRAINT "Подтвердить учас
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "event_participants" ADD CONSTRAINT "event_participants.create_by_uid <- users.id" FOREIGN KEY ("created_by_uid")
+ALTER TABLE "event_participants" ADD CONSTRAINT "event_participants.create_by_uid_users.id" FOREIGN KEY ("created_by_uid")
 	REFERENCES "users"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "event_participants" ADD CONSTRAINT "event_participants.updated_by_uid <- users.id" FOREIGN KEY ("update_by_uid")
+ALTER TABLE "event_participants" ADD CONSTRAINT "event_participants.updated_by_uid_users.id" FOREIGN KEY ("update_by_uid")
 	REFERENCES "users"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "pgas_points" ADD CONSTRAINT "pgas_points.role_id <- event_roles.id" FOREIGN KEY ("role_id")
+ALTER TABLE "pgas_points" ADD CONSTRAINT "pgas_points.role_id_event_roles.id" FOREIGN KEY ("role_id")
 	REFERENCES "event_roles"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "pgas_points" ADD CONSTRAINT "pgas_points.level_id <- event_levels.id" FOREIGN KEY ("level_id")
+ALTER TABLE "pgas_points" ADD CONSTRAINT "pgas_points.level_id_event_levels.id" FOREIGN KEY ("level_id")
 	REFERENCES "event_levels"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
