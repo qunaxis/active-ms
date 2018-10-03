@@ -1,5 +1,4 @@
-﻿let sql = `
-DROP TABLE IF EXISTS "users" CASCADE;
+﻿let sql = `DROP TABLE IF EXISTS "users" CASCADE;
 
 CREATE TABLE "users" (
 	"id" SERIAL NOT NULL,
@@ -103,7 +102,7 @@ CREATE TABLE "event_levels" (
 
 DROP TABLE IF EXISTS "event_types" CASCADE;
 
-CREATE TABLE "event_types" (
+CREATE TABLE "event_types" (a
 	"id" SERIAL NOT NULL,
 	"title" text NOT NULL,
 	"description" text,
@@ -121,7 +120,7 @@ CREATE TABLE "pgas_points" (
 );
 
 
-ALTER TABLE "users" ADD CONSTRAINT "Ref_users_to_users" FOREIGN KEY ("updated_by_uid")
+ALTER TABLE "users" ADD CONSTRAINT "users <- users.update_by_uid" FOREIGN KEY ("updated_by_uid")
 	REFERENCES "users"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
@@ -142,21 +141,21 @@ ALTER TABLE "role_elections" ADD CONSTRAINT "Провести выборы на 
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "role_elections" ADD CONSTRAINT "Ref_role_elections_to_users" FOREIGN KEY ("confirmed_by_uid")
+ALTER TABLE "role_elections" ADD CONSTRAINT "role_elections.confirmed_by_uid <- users.id" FOREIGN KEY ("confirmed_by_uid")
 	REFERENCES "users"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "role_elections" ADD CONSTRAINT "Ref_role_elections_to_users 2" FOREIGN KEY ("created_by_uid")
+ALTER TABLE "role_elections" ADD CONSTRAINT "role_elections.created_by_uid <- users.id" FOREIGN KEY ("created_by_uid")
 	REFERENCES "users"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "role_elections" ADD CONSTRAINT "Ref_role_elections_to_users 3" FOREIGN KEY ("updated_by_uid")
+ALTER TABLE "role_elections" ADD CONSTRAINT "role_elections.updated_by_uid <- users.id" FOREIGN KEY ("updated_by_uid")
 	REFERENCES "users"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
@@ -170,21 +169,21 @@ ALTER TABLE "events" ADD CONSTRAINT "events.level_id <- event_levels.id" FOREIGN
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "events" ADD CONSTRAINT "Ref_events_to_event_types" FOREIGN KEY ("type_id")
+ALTER TABLE "events" ADD CONSTRAINT "event.type_id <- event_types.id" FOREIGN KEY ("type_id")
 	REFERENCES "event_types"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "events" ADD CONSTRAINT "Ref_events_to_users" FOREIGN KEY ("created_by_uid")
+ALTER TABLE "events" ADD CONSTRAINT "events.created_by_uid <- users.id" FOREIGN KEY ("created_by_uid")
 	REFERENCES "users"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "events" ADD CONSTRAINT "Ref_events_to_users" FOREIGN KEY ("updated_by_uid")
+ALTER TABLE "events" ADD CONSTRAINT "events.update_by_uid <- users.id" FOREIGN KEY ("updated_by_uid")
 	REFERENCES "users"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
@@ -219,33 +218,36 @@ ALTER TABLE "event_participants" ADD CONSTRAINT "Подтвердить учас
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "event_participants" ADD CONSTRAINT "Ref_event_participants_to_users" FOREIGN KEY ("created_by_uid")
+ALTER TABLE "event_participants" ADD CONSTRAINT "event_participants.create_by_uid <- users.id" FOREIGN KEY ("created_by_uid")
 	REFERENCES "users"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "event_participants" ADD CONSTRAINT "event_participants.update_by_uid <- users.id" FOREIGN KEY ("update_by_uid")
+ALTER TABLE "event_participants" ADD CONSTRAINT "event_participants.updated_by_uid <- users.id" FOREIGN KEY ("update_by_uid")
 	REFERENCES "users"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "pgas_points" ADD CONSTRAINT "Ref_pgas_points_to_event_roles" FOREIGN KEY ("role_id")
+ALTER TABLE "pgas_points" ADD CONSTRAINT "pgas_points.role_id <- event_roles.id" FOREIGN KEY ("role_id")
 	REFERENCES "event_roles"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
 
-ALTER TABLE "pgas_points" ADD CONSTRAINT "Ref_pgas_points_to_event_levels" FOREIGN KEY ("level_id")
+ALTER TABLE "pgas_points" ADD CONSTRAINT "pgas_points.level_id <- event_levels.id" FOREIGN KEY ("level_id")
 	REFERENCES "event_levels"("id")
 	MATCH SIMPLE
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION
 	NOT DEFERRABLE;
+
+
+
 `
 sql = sql.toString()
 
